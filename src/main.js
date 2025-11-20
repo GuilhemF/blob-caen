@@ -22,16 +22,20 @@ Matter.Runner.run(runner, engine);
 // Rectangle params: x, y, width, height, options
 const wallOptions = { isStatic: true };
 const wallThickness = 100; // Épaisseur des murs (hors champ)
+const padding = 15;
 
 const walls = [
-  // Haut
-  Matter.Bodies.rectangle(SVG_WIDTH / 2, -wallThickness / 2, SVG_WIDTH, wallThickness, wallOptions),
-  // Bas
-  Matter.Bodies.rectangle(SVG_WIDTH / 2, SVG_HEIGHT + wallThickness / 2, SVG_WIDTH, wallThickness, wallOptions),
-  // Droite
-  Matter.Bodies.rectangle(SVG_WIDTH + wallThickness / 2, SVG_HEIGHT / 2, wallThickness, SVG_HEIGHT, wallOptions),
-  // Gauche
-  Matter.Bodies.rectangle(-wallThickness / 2, SVG_HEIGHT / 2, wallThickness, SVG_HEIGHT, wallOptions)
+  // Haut (On descend le mur du haut de 'padding')
+  Matter.Bodies.rectangle(SVG_WIDTH / 2, -wallThickness / 2 + padding, SVG_WIDTH, wallThickness, wallOptions),
+  
+  // Bas (On remonte le mur du bas de 'padding')
+  Matter.Bodies.rectangle(SVG_WIDTH / 2, SVG_HEIGHT + wallThickness / 2 - padding, SVG_WIDTH, wallThickness, wallOptions),
+  
+  // Droite (On décale le mur de droite vers la gauche de 'padding')
+  Matter.Bodies.rectangle(SVG_WIDTH + wallThickness / 2 - padding, SVG_HEIGHT / 2, wallThickness, SVG_HEIGHT, wallOptions),
+  
+  // Gauche (On décale le mur de gauche vers la droite de 'padding')
+  Matter.Bodies.rectangle(-wallThickness / 2 + padding, SVG_HEIGHT / 2, wallThickness, SVG_HEIGHT, wallOptions)
 ];
 
 Matter.World.add(engine.world, walls);
