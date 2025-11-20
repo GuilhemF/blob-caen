@@ -100,3 +100,82 @@ html {
   }
 }
 
+:root {
+  /* Tes dimensions précises */
+  --scene-width: 1500px;
+  --scene-height: 350px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  display: flex;
+  justify-content: center; /* Centre horizontalement */
+  align-items: center;     /* Centre verticalement */
+  overflow: hidden;
+  background-color: #f0f0f0;
+  p{
+    font-family: "Manrope", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+  }
+}
+
+
+/* Le conteneur "Sandwich" */
+.scene {
+  position: relative; /* Indispensable pour que les enfants soient en absolute par rapport à lui */
+  /* 1. Largeur fluide avec un max */
+  width: 100%; 
+  max-width: var(--scene-width);
+  
+  /* 2. LA CLÉ : On vire la height fixe et on utilise aspect-ratio */
+  height: auto; 
+  aspect-ratio: 1500 / 350;
+
+  margin: 2rem;
+  background-color: #f0f0f0;
+  margin:2rem;
+  overflow: hidden;
+
+}
+
+/* Style commun pour toutes les couches */
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Z-INDEX : L'ordre d'empilement */
+
+/* 1. Au fond */
+.bg-layer {
+  z-index: 1;
+  object-fit: contain;
+  pointer-events: none; /* Le clic passe à travers */
+}
+
+/* 2. Au milieu (Interactif) */
+.blob-layer {
+  z-index: 2;
+  cursor: pointer; /* Pour montrer qu'on peut cliquer */
+  /* Pas de pointer-events: none ici, sinon on peut pas cliquer ! */
+  
+  position: absolute;
+  inset: 0;
+}
+
+/* 3. Au-dessus (Le logo) */
+.logo-layer {
+  z-index: 3;
+  object-fit: contain; /* Ou cover, selon ton design */
+  pointer-events: none; /* SUPER IMPORTANT : Le clic passe à travers le logo pour toucher les blobs */
+}
